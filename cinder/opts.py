@@ -158,6 +158,7 @@ from cinder.volume.drivers import scality as cinder_volume_drivers_scality
 from cinder.volume.drivers import sheepdog as cinder_volume_drivers_sheepdog
 from cinder.volume.drivers import smbfs as cinder_volume_drivers_smbfs
 from cinder.volume.drivers import solidfire as cinder_volume_drivers_solidfire
+from cinder.volume.drivers import storpool as cinder_volume_drivers_storpool
 from cinder.volume.drivers.synology import synology_common as \
     cinder_volume_drivers_synology_synologycommon
 from cinder.volume.drivers import tegile as cinder_volume_drivers_tegile
@@ -325,6 +326,7 @@ def list_opts():
                 [cinder_scheduler_manager.scheduler_driver_opt],
                 cinder_backup_drivers_nfs.nfsbackup_service_opts,
                 cinder_volume_drivers_blockbridge.blockbridge_opts,
+                cinder_volume_drivers_storpool.storpool_opts,
                 [cinder_scheduler_scheduleroptions.
                     scheduler_json_config_location_opt],
                 cinder_volume_drivers_zfssa_zfssanfs.ZFSSA_OPTS,
