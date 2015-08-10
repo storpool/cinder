@@ -173,6 +173,7 @@ from cinder.volume.drivers.san import san as cinder_volume_drivers_san_san
 from cinder.volume.drivers import sheepdog as cinder_volume_drivers_sheepdog
 from cinder.volume.drivers import smbfs as cinder_volume_drivers_smbfs
 from cinder.volume.drivers import solidfire as cinder_volume_drivers_solidfire
+from cinder.volume.drivers import storpool as cinder_volume_drivers_storpool
 from cinder.volume.drivers.synology import synology_common as \
     cinder_volume_drivers_synology_synologycommon
 from cinder.volume.drivers import tegile as cinder_volume_drivers_tegile
@@ -376,6 +377,7 @@ def list_opts():
                 cinder_volume_drivers_sheepdog.sheepdog_opts,
                 cinder_volume_drivers_smbfs.volume_opts,
                 cinder_volume_drivers_solidfire.sf_opts,
+                cinder_volume_drivers_storpool.storpool_opts,
                 cinder_volume_drivers_synology_synologycommon.cinder_opts,
                 cinder_volume_drivers_tegile.tegile_opts,
                 cinder_volume_drivers_tintri.tintri_opts,
