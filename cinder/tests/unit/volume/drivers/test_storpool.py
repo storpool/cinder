@@ -1,4 +1,4 @@
-# Copyright 2014 - 2016 StorPool
+# Copyright 2014 - 2017  StorPool
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -72,7 +72,7 @@ class MockDisk(object):
     def __init__(self, diskId):
         self.id = diskId
         self.generationLeft = -1
-        self.agCount = 13
+        self.agCount = 14
         self.agFree = 12
         self.agAllocated = 1
 
@@ -231,8 +231,8 @@ class StorPoolTestCase(test.TestCase):
                              sorted([p['pool_name'] for p in stats['pools']]))
         r = re.compile('^template_([A-Za-z0-9_]+)$')
         for pool in stats['pools']:
-            self.assertEqual(19, pool['total_capacity_gb'])
-            self.assertEqual(5, pool['free_capacity_gb'])
+            self.assertEqual(21, pool['total_capacity_gb'])
+            self.assertEqual(5, int(pool['free_capacity_gb']))
             if pool['pool_name'] != 'default':
                 m = r.match(pool['pool_name'])
                 self.assertIsNotNone(m)
@@ -251,7 +251,7 @@ class StorPoolTestCase(test.TestCase):
 
         self.driver.create_volume({'id': '1', 'name': 'v1', 'size': 1,
                                    'volume_type': None})
-        self.assertListEqual([volumeName('1')], volumes.keys())
+        self.assertListEqual([volumeName('1')], list(volumes.keys()))
         self.assertVolumeNames(('1',))
         v = volumes[volumeName('1')]
         self.assertEqual(1 * units.Gi, v['size'])
@@ -326,7 +326,7 @@ class StorPoolTestCase(test.TestCase):
         self.driver.create_volume({'id': '2', 'name': 'v2', 'size': 1,
                                    'volume_type': None})
         self.assertListEqual([volumeName('1'), volumeName('2')],
-                             volumes.keys())
+                             list(volumes.keys()))
         self.assertVolumeNames(('1', '2',))
 
         # Failure: the "migrated" volume does not even exist
@@ -347,7 +347,7 @@ class StorPoolTestCase(test.TestCase):
                                                  'available')
         self.assertDictEqual({'_name_id': None}, res)
         self.assertListEqual([volumeName('1'), volumeName('3')],
-                             volumes.keys())
+                             list(volumes.keys()))
         self.assertVolumeNames(('1', '3',))
 
         for vid in ('1', '3'):
@@ -395,8 +395,8 @@ class StorPoolTestCase(test.TestCase):
         self.driver.configuration.storpool_replication = 3
         stats = self.driver.get_volume_stats(refresh=True)
         pool = stats['pools'][0]
-        self.assertEqual(19, pool['total_capacity_gb'])
-        self.assertEqual(5, pool['free_capacity_gb'])
+        self.assertEqual(21, pool['total_capacity_gb'])
+        self.assertEqual(5, int(pool['free_capacity_gb']))
 
         self.driver.create_volume({'id': 'cfgrepl1', 'name': 'v1', 'size': 1,
                                    'volume_type': None})
@@ -409,8 +409,8 @@ class StorPoolTestCase(test.TestCase):
         self.driver.configuration.storpool_replication = 2
         stats = self.driver.get_volume_stats(refresh=True)
         pool = stats['pools'][0]
-        self.assertEqual(19, pool['total_capacity_gb'])
-        self.assertEqual(8, pool['free_capacity_gb'])
+        self.assertEqual(21, pool['total_capacity_gb'])
+        self.assertEqual(8, int(pool['free_capacity_gb']))
 
         self.driver.create_volume({'id': 'cfgrepl2', 'name': 'v1', 'size': 1,
                                    'volume_type': None})
